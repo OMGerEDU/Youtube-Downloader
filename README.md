@@ -3,11 +3,11 @@
 
 <h3> Do you want to contribute to this project?  help me with the to-do list! </h3>
 <h4>
-[X] Create the command executor. <be>
-[X] Create YT-DL Commands. <be>
-[X] Assert Video and Audio <be>
-[] Create a jar to use the project with args[] straight from cmd <be>
-[] Create a dockerfile  <be>
+[X] Create the command executor. <br>
+[X] Create YT-DL Commands. <br>
+[X] Assert Video and Audio <br>
+[] Create a jar to use the project with args[] straight from cmd <br>
+[] Create a dockerfile  <br>
 </h4>
 
 <h3> You can open ticket if there are any problems/questions.</h3>
