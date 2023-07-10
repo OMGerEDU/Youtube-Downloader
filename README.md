@@ -29,13 +29,13 @@
   [ ] To be updated. <br>
 </h4> 
 
-<br><br><br>
+<br><br>
 
 <h3> You can open ticket if there are any problems/questions.</h3>
 
 <br><br><br><br><br>
 <h3> Dependecies:<br>
-YT-DLP - Open source project that helps you download media files with ease! </h3> <br>
+YT-DLP - Open source project that helps you download media files with ease! </h3>
 <h4> Link to GitHub project: https://github.com/yt-dlp/yt-dlp </h4>
 
 
