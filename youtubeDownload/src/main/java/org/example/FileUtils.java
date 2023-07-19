@@ -9,8 +9,6 @@ import java.util.concurrent.TimeUnit;
 
 public class FileUtils {
 
-
-
     //run the script using cmd executable and return the exit code
     public static Object runScript(String cmd, String path) throws IOException, InterruptedException {
         ArrayList<String> commands = new ArrayList<>();
@@ -21,7 +19,8 @@ public class FileUtils {
         pb.directory(new File(path));
         pb.redirectErrorStream(true);
         Process process = pb.start();
-        flushInputStreamReader(process, false);
+        String output = flushInputStreamReader(process, false);
+        System.out.println(output);
         int exitCode = process.waitFor();
         TimeUnit.SECONDS.sleep(1);
         return exitCode == 0;
