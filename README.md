@@ -7,9 +7,9 @@
 [X] Create the command executor. <br>
 [X] Create YT-DL Commands. <br>
 [X] Assert Video and Audio <br>
-[ ] Create a jar version to use the project with args[] straight from cmd <br>
-[ ] Create a docker file  <be>
-</br><br>
+[X] Create a jar version to use the project with args[] straight from cmd <br>
+[ ] Create a docker file <br>
+</h4>
 
 
 

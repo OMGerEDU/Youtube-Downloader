@@ -1,0 +1,5 @@
+/youtubeDownload/target
+/.idea
+.gradle/
+build/
+resources/
