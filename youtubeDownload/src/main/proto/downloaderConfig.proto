@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package org.protoc.DownloaderProto;
+
+service DownloaderService {
+    rpc ExecuteCommand(DownloaderConfig) returns (DownloaderConfig);
+}
+
+message DownloaderRequest {
+    DownloaderConfig config = 1;
+}
+
+message DownloaderResponse {
+    DownloaderConfig config = 1;
+    string error = 2;
+    int32 status = 3;
+}
+
+message DownloaderConfig{
+    string link = 1;
+    string path = 2;
+    string command = 3;
+}

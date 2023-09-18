@@ -24,7 +24,6 @@ public class Downloader {
         runScript(cmd, pathToDlpParent);
         return checkDownloaded(outputPath.getAbsolutePath());
     }
-
     public static File checkDownloaded(String outputLocation) {
         File toCheck = new File(outputLocation);
         if (toCheck.exists()) {
@@ -33,11 +32,9 @@ public class Downloader {
         }
         return null;
     }
-
     public static void extractYtDlp() throws IOException {
         Files.copy(Objects.requireNonNull(Downloader.class.getClassLoader().getResourceAsStream("yt-dlp.exe")),
                 Paths.get("resources", "yt-dlp.exe"),
                 StandardCopyOption.REPLACE_EXISTING);
     }
-
 }
