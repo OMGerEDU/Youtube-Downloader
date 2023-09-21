@@ -2,23 +2,26 @@ package org.example;
 
 import io.grpc.stub.StreamObserver;
 import org.protoc.DownloaderProto.DownloaderConfigOuterClass;
-import org.protoc.DownloaderProto.DownloaderServiceGrpc;
-
+import org.protoc.DownloaderProto.DownloaderManagerServiceGrpc;
 import java.io.File;
 import java.util.logging.Logger;
-
 import static org.example.Downloader.downloadVideo;
-import static org.example.FileUtils.runScript;
 
-public class DownloaderService extends DownloaderServiceGrpc.DownloaderServiceImplBase {
+public class DownloaderService extends DownloaderManagerServiceGrpc.DownloaderManagerServiceImplBase {
 
     Logger logger = Logger.getLogger(DownloaderService.class.getName());
+
     @Override
-    public void executeCommand(DownloaderConfigOuterClass.DownloaderConfig request, StreamObserver<DownloaderConfigOuterClass.DownloaderConfig> responseObserver) {
+    public void executeCommand(DownloaderConfigOuterClass.DownloaderRequest request, StreamObserver<DownloaderConfigOuterClass.DownloaderResponse> responseObserver) {
+        logger.info("Received request for " + request.getConfig().getLink());
+        System.out.println("Received request for " + request.getConfig().getLink());
         try {
-            File result = downloadVideo(request.getLink(),new File(request.getPath()));
+            File result = downloadVideo(request.getConfig().getLink(),new File(request.getConfig().getPath()));
             if (result != null) {
-                responseObserver.onNext(request);
+                DownloaderConfigOuterClass.DownloaderResponse.Builder builder = DownloaderConfigOuterClass.DownloaderResponse.newBuilder();
+                DownloaderConfigOuterClass.DownloaderConfig config = DownloaderConfigOuterClass.DownloaderConfig.newBuilder().setLink(request.getConfig().getLink()).setPath(result.getPath()).build();
+                //
+                responseObserver.onNext(builder.setConfig(config).build());
                 responseObserver.onCompleted();
             }
             else {
@@ -29,4 +32,9 @@ public class DownloaderService extends DownloaderServiceGrpc.DownloaderServiceIm
             logger.warning(e.getMessage());
         }
     }
+
+
+
+
+
 }

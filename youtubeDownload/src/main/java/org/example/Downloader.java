@@ -14,14 +14,14 @@ public class Downloader {
     public static final String pathToDlpParent = new File(pathToDLP).getParent();
 
     public static File downloadVideo(String link, File outputPath) throws IOException, InterruptedException {
-        String cmd = "yt-dlp.exe \"" + link+"\" -P \""+outputPath+"\"";
-        runScript(cmd, pathToDlpParent);
+        String cmd = "yt-dlp \"" + link+"\" -P \""+outputPath+"\"";
+        runScript(cmd, System.getProperty("user.home"));
         return checkDownloaded(outputPath.getAbsolutePath());
     }
 
     public static File downloadAudio(String link, File outputPath) throws IOException, InterruptedException {
-        String cmd = "yt-dlp.exe -x --audio-format mp3 \"" + link+"\" -P \""+outputPath+"\"";
-        runScript(cmd, pathToDlpParent);
+        String cmd = "yt-dlp -x --audio-format mp3 \"" + link+"\" -P \""+outputPath+"\"";
+        runScript(cmd, System.getProperty("user.home"));
         return checkDownloaded(outputPath.getAbsolutePath());
     }
     public static File checkDownloaded(String outputLocation) {
