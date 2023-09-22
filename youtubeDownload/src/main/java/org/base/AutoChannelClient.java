@@ -1,4 +1,4 @@
-package org.example;
+package org.base;
 
 import io.grpc.ManagedChannel;
 import io.grpc.netty.GrpcSslContexts;

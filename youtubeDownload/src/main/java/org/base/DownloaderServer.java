@@ -1,9 +1,8 @@
-package org.example;
+package org.base;
 
 import io.grpc.Server;
 import io.grpc.netty.GrpcSslContexts;
 import io.grpc.netty.NettyServerBuilder;
-import io.grpc.protobuf.services.ProtoReflectionService;
 import io.netty.handler.ssl.ClientAuth;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
@@ -17,8 +16,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import static org.example.Globals.SERVER_HOST;
-import static org.example.Globals.SERVER_PORT;
+import static org.base.Globals.SERVER_HOST;
+import static org.base.Globals.SERVER_PORT;
 
 public class DownloaderServer {
 

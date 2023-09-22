@@ -1,4 +1,4 @@
-package org.example;
+package org.base;
 
 import io.netty.handler.ssl.SslContext;
 import org.junit.Test;
@@ -6,10 +6,10 @@ import org.protoc.DownloaderProto.DownloaderConfigOuterClass;
 import org.protoc.DownloaderProto.DownloaderConfigOuterClass.DownloaderConfig;
 import org.protoc.DownloaderProto.DownloaderConfigOuterClass.DownloaderRequest;
 
-import static org.example.AutoChannelClient.DownloaderRequest;
-import static org.example.DownloaderServer.LOGGER;
-import static org.example.Globals.SERVER_HOST;
-import static org.example.Globals.SERVER_PORT;
+import static org.base.AutoChannelClient.DownloaderRequest;
+import static org.base.DownloaderServer.LOGGER;
+import static org.base.Globals.SERVER_HOST;
+import static org.base.Globals.SERVER_PORT;
 
 import javax.net.ssl.SSLException;
 

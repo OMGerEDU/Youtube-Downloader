@@ -34,7 +34,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>YT.auto.services.AutoChannelServer</mainClass>
+                            <mainClass>org.base.DownloaderServer</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

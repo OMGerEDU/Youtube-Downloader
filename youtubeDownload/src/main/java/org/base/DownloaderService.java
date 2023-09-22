@@ -1,11 +1,11 @@
-package org.example;
+package org.base;
 
 import io.grpc.stub.StreamObserver;
 import org.protoc.DownloaderProto.DownloaderConfigOuterClass;
 import org.protoc.DownloaderProto.DownloaderManagerServiceGrpc;
 import java.io.File;
 import java.util.logging.Logger;
-import static org.example.Downloader.downloadVideo;
+import static org.base.Downloader.downloadVideo;
 
 public class DownloaderService extends DownloaderManagerServiceGrpc.DownloaderManagerServiceImplBase {
 
