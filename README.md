@@ -8,7 +8,9 @@
 [X] Create YT-DL Commands. <br>
 [X] Assert Video and Audio <br>
 [X] Create a jar version to use the project with args[] straight from cmd <br>
-[ ] Create a docker file <br>
+[X] Implement protocol buffers files for the project
+[X] Select an advanced architecture for the project
+[X] Implement server system - Local server using gRPC with TLS Connection.
 </h4>
 
 
@@ -17,16 +19,16 @@
 <h4>
 [X] Download from YouTube <br>
 [X] Select format MP3\MP4 <br>
-[ ] Download a playlist with a given format <br>
+[X] Download a playlist with a given format <br>
 </h4>
 
 
 <br>
 <h3> GUI: </h3>
 <h4>
-  []  Decide about language and framework <br>
+  [X]  Decide about language and framework <br>
     - Current options: Swing\Flutter <br>
-  [ ] To be updated. <br>
+  23/9
 </h4> 
 
 <br><br>
@@ -37,5 +39,21 @@
 <h3> Dependecies:<br>
 YT-DLP - Open source project that helps you download media files with ease! </h3>
 <h4> Link to GitHub project: https://github.com/yt-dlp/yt-dlp </h4>
+
+
+
+
+<H2> Updates: 
+<br><br>
+23/9/2023 - <br> </H2>
+<H3> Huge update, <br>
+I have updated the whole project architecture, from simple console-based to GUI-based.<br>
+The GUI is available, also open source, using Flutter, everything is still under the prototype phase.<br>
+Added protobuf3 object for the downloader request and response.<br>
+Added gRPC service for the downloader request transaction between server\client.<br>
+Created all required connections to connect to a client.<br>
+</H3><br>
+<br>
+
 
 
