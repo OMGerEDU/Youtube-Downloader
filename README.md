@@ -56,4 +56,11 @@ Created all required connections to connect to a client.<br>
 <br>
 
 
+<h2> Resources: </h2>
+<br> <br>
+<h2> GUI: </h2>
+https://github.com/OMGerEDU/wrapper_gui
+<h2> YT-DLP: </h2>
+https://github.com/yt-dlp/yt-dlp
+*Make sure to add Youtube DLP to your enviroment PATH
 
