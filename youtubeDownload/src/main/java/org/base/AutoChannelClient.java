@@ -10,9 +10,13 @@ import org.protoc.DownloaderProto.DownloaderManagerServiceGrpc;
 
 
 import javax.net.ssl.SSLException;
-import java.io.File;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
+
+import static org.base.DownloaderServer.streamToFile;
 
 
 public class AutoChannelClient {
@@ -68,18 +72,54 @@ public class AutoChannelClient {
 
 
 
-    public static SslContext loadTLScredentials() throws SSLException {
-        File serverCACert = new File("cert/ca-cert.pem");
-        File clientCertFile = new File("cert/client-cert.pem");
-        File clientKeyFile = new File("cert/client-key.pem");
+//    public static SslContext loadTLScredentials() throws SSLException {
+//        File serverCACert = new File("resources/cert/ca-cert.pem");
+//        File clientCertFile = new File("resources/cert/client-cert.pem");
+//        File clientKeyFile = new File("resources/cert/client-key.pem");
+//
+//        if (!clientCertFile.exists()|| !clientKeyFile.exists() || !serverCACert.exists())
+//            throw new SSLException("cert files not found \n" +serverCACert+" "+serverCACert.exists()+"\n "+clientCertFile+" "+clientCertFile.exists()+"\n "+clientKeyFile+" "+clientKeyFile.exists());
+//
+//        return GrpcSslContexts.forClient()
+//                .keyManager(clientCertFile, clientKeyFile)
+//                .trustManager(serverCACert)
+//                .build();
+//    }
+    public static SslContext loadTLScredentials() throws IOException {
 
-        if (!clientCertFile.exists()|| !clientKeyFile.exists() || !serverCACert.exists())
+        InputStream serverCACert = AutoChannelClient.class.getClassLoader().getResourceAsStream("cert/ca-cert.pem");
+        InputStream clientCertFile = AutoChannelClient.class.getClassLoader().getResourceAsStream("cert/client-cert.pem");
+        InputStream clientKeyFile = AutoChannelClient.class.getClassLoader().getResourceAsStream("cert/client-key.pem");
+
+        File serverCertFile = streamToFile(serverCACert, "ca-cert.pem");
+        File serverKeyFile = streamToFile(clientCertFile, "client-cert.pem");
+        File clientCACertFile = streamToFile(clientKeyFile, "client-key.pem");
+        LOGGER.info("Checking existence:"+serverCertFile.exists()+" "+serverKeyFile.exists()+" "+clientCACertFile.exists());
+
+        if (!serverCertFile.exists()|| !serverKeyFile.exists() || !clientCACertFile.exists())
             throw new SSLException("cert files not found \n" +serverCACert+"\n "+clientCertFile+"\n "+clientKeyFile+"\n");
 
         return GrpcSslContexts.forClient()
                 .keyManager(clientCertFile, clientKeyFile)
                 .trustManager(serverCACert)
                 .build();
+    }
+
+    static File streamToFile(InputStream in, String fileName) throws IOException {
+        Path tempPath = Files.createTempFile(fileName, null);
+        File tempFile = tempPath.toFile();
+        tempFile.deleteOnExit(); // The file will be deleted when the JVM terminates.
+
+        try (OutputStream out = new FileOutputStream(tempFile)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+
+            while ((bytesRead = in.read(buffer)) != -1) {
+                out.write(buffer, 0, bytesRead);
+            }
+        }
+
+        return tempFile;
     }
 
 

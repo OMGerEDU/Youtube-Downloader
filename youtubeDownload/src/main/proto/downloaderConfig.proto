@@ -21,5 +21,8 @@ message DownloaderResponse {
 message DownloaderConfig{
     string link = 1;
     string path = 2;
-    string command = 3;
+    string downloadType = 3;
+    string command = 4;
+    bool isPlaylist = 5;
+
 }

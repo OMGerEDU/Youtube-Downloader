@@ -8,8 +8,9 @@ import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 
 import javax.net.ssl.SSLException;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -50,8 +51,10 @@ public class DownloaderServer {
         });
     }
 
-    public void buildServer() throws SSLException {
+    public void buildServer() throws IOException {
+        LOGGER.severe("TEST1");
         sslContext = loadTLSCredentials();
+        LOGGER.severe("TEST2");
         downloaderService = new DownloaderService();
         server = NettyServerBuilder.forPort(this.port).sslContext(sslContext)
                 .addService(downloaderService)
@@ -60,6 +63,8 @@ public class DownloaderServer {
                 .keepAliveTime(15, TimeUnit.MINUTES)
                 .maxConcurrentCallsPerConnection(1000)
                 .build();
+        LOGGER.severe("TEST3");
+
     }
 
     public void start() throws IOException {
@@ -69,16 +74,39 @@ public class DownloaderServer {
     }
 
 
-    public static SslContext loadTLSCredentials() throws SSLException {
-        File serverCertFile = new File("cert/server-cert.pem");
-        File serverKeyFile = new File("cert/server-key.pem");
-        File clientCACertFile = new File("cert/ca-cert.pem");
+    public static SslContext loadTLSCredentials() throws IOException {
+        InputStream serverCertStream = DownloaderServer.class.getClassLoader().getResourceAsStream("cert/server-cert.pem");
+        InputStream serverKeyStream = DownloaderServer.class.getClassLoader().getResourceAsStream("cert/server-key.pem");
+        InputStream clientCACertStream = DownloaderServer.class.getClassLoader().getResourceAsStream("cert/ca-cert.pem");
+
+        File serverCertFile = streamToFile(serverCertStream, "server-cert.pem");
+        File serverKeyFile = streamToFile(serverKeyStream, "server-key.pem");
+        File clientCACertFile = streamToFile(clientCACertStream, "ca-cert.pem");
 
         SslContextBuilder ctxBuilder = SslContextBuilder.forServer(serverCertFile, serverKeyFile)
                 .clientAuth(ClientAuth.NONE)
                 .trustManager(clientCACertFile);
         return GrpcSslContexts.configure(ctxBuilder).build();
     }
+
+
+    static File streamToFile(InputStream in, String fileName) throws IOException {
+        Path tempPath = Files.createTempFile(fileName, null);
+        File tempFile = tempPath.toFile();
+        tempFile.deleteOnExit(); // The file will be deleted when the JVM terminates.
+
+        try (OutputStream out = new FileOutputStream(tempFile)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+
+            while ((bytesRead = in.read(buffer)) != -1) {
+                out.write(buffer, 0, bytesRead);
+            }
+        }
+
+        return tempFile;
+    }
+
 
 //    public DownloaderServer(ServerBuilder serverBuilder,String host, int port, DownloaderService downloaderService) {
 //        ManagedChannel channel;

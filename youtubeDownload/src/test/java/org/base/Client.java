@@ -12,12 +12,13 @@ import static org.base.Globals.SERVER_HOST;
 import static org.base.Globals.SERVER_PORT;
 
 import javax.net.ssl.SSLException;
+import java.io.IOException;
 
 public class Client {
 
 
     @Test
-    public void mockClient() throws SSLException, InterruptedException {
+    public void mockClient() throws IOException, InterruptedException {
         SslContext sslContext = AutoChannelClient.loadTLScredentials();
         LOGGER.info("Starting client...");
         AutoChannelClient client = new AutoChannelClient(SERVER_HOST, SERVER_PORT,sslContext);
