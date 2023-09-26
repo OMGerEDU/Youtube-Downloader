@@ -86,7 +86,7 @@ public class AutoChannelClient {
 //                .build();
 //    }
     public static SslContext loadTLScredentials() throws IOException {
-
+        //System.out.println("yo");
         InputStream serverCACert = AutoChannelClient.class.getClassLoader().getResourceAsStream("cert/ca-cert.pem");
         InputStream clientCertFile = AutoChannelClient.class.getClassLoader().getResourceAsStream("cert/client-cert.pem");
         InputStream clientKeyFile = AutoChannelClient.class.getClassLoader().getResourceAsStream("cert/client-key.pem");
