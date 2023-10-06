@@ -29,11 +29,9 @@ public class Downloader {
         }
         return downloadedFile;
     }
-
-
     public static File downloadVideo(String link, File outputPath, Boolean ... isPlaylist)  {
         try {
-            String cmd = "yt-dlp " + (isPlaylist[0] ? "" : "--no-playlist ") + "\""+link+"\" -P \""+outputPath+"\"";
+            String cmd = "yt-dlp " + (isPlaylist[0] ? "" : "--no-playlist ") + "\""+link+"\" -P \""+outputPath+"\" -f mp4";
             runScript(cmd, System.getProperty("user.home"));
         }
         catch (Exception e) {
