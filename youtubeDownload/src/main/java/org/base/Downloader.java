@@ -1,5 +1,6 @@
 package org.base;
 
+import org.base.Client.CommandBuilder;
 import org.protoc.DownloaderProto.DownloaderConfigOuterClass;
 import org.protoc.DownloaderProto.DownloaderConfigOuterClass.DownloaderRequest;
 
@@ -21,14 +22,29 @@ public class Downloader {
 
     public static File executeDownloadRequest(DownloaderRequest request) {
         File downloadedFile = null;
-        switch (request.getConfig().getDownloadType()) {
-            case "Audio" ->
-                    downloadedFile = downloadAudio(request.getConfig().getLink(), new File(request.getConfig().getPath()), request.getConfig().getIsPlaylist());
-            case "Video" ->
-                    downloadedFile =downloadVideo(request.getConfig().getLink(), new File(request.getConfig().getPath()), request.getConfig().getIsPlaylist());
-        }
+        downloadedFile = downloadRequest(request);
+//        switch (request.getConfig().getDownloadType()) {
+//            case "Audio" ->
+//                    downloadedFile = downloadAudio(request.getConfig().getLink(), new File(request.getConfig().getPath()), request.getConfig().getIsPlaylist());
+//            case "Video" ->
+//                    downloadedFile =downloadVideo(request.getConfig().getLink(), new File(request.getConfig().getPath()), request.getConfig().getIsPlaylist());
+//        }
         return downloadedFile;
     }
+
+    public static File downloadRequest(DownloaderRequest request) {
+        try {
+            String cmd = new CommandBuilder(request.getConfig()).build();
+            runScript(cmd, System.getProperty("user.home"));
+        }
+        catch (Exception e) {
+            LOGGER.severe(e.getMessage());
+            return null;
+        }
+        return checkDownloaded(request.getConfig().getPath());
+    }
+
+
     public static File downloadVideo(String link, File outputPath, Boolean ... isPlaylist)  {
         try {
             String cmd = "yt-dlp " + (isPlaylist[0] ? "" : "--no-playlist ") + "\""+link+"\" -P \""+outputPath+"\" -f mp4";

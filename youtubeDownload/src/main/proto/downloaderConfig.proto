@@ -18,11 +18,14 @@ message DownloaderResponse {
     int32 status = 3;
 }
 
-message DownloaderConfig{
+message DownloaderConfig {
     string link = 1;
     string path = 2;
     string downloadType = 3;
-    string command = 4;
-    bool isPlaylist = 5;
-
+    string outputFormat = 4;
+    string resolution = 5;
+    bool isPlaylist = 6;
+    int32 retries = 7;
+    bool embedSubtitles = 8;
+    bool embedThumbnail = 9;
 }
